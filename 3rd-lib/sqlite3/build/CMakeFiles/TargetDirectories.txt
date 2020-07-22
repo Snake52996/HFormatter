@@ -1,0 +1,3 @@
+F:/Linux-Windows/HFormatter/3rd-lib/sqlite3/build/CMakeFiles/sqlite3.dir
+F:/Linux-Windows/HFormatter/3rd-lib/sqlite3/build/CMakeFiles/edit_cache.dir
+F:/Linux-Windows/HFormatter/3rd-lib/sqlite3/build/CMakeFiles/rebuild_cache.dir

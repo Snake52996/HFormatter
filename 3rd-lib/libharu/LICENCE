@@ -1,3 +1,4 @@
+
 Copyright (C) 1999-2006 Takeshi Kanno
 Copyright (C) 2007-2009 Antony Dovgal
 
@@ -17,9 +18,10 @@ to the following restrictions:
  2. Altered source versions must be plainly marked as such, and must not be 
     misrepresented as being the original software.
  3. This notice may not be removed or altered from any source distribution.
- 
+
 ===This separatrix and the content below is NOT a part of the origin licence===
 Changes made:
-	1. Only code (files) under the "include" directory and a pre-compiled
-	    shared library are included into this project.
-	2. No modification is made to the origin code.
+	1. Lots of files are deleted to reduce the size of this library;
+	2. The CMakeLists.txt in root directory has been rewritten based on the
+		origin version.
+Please visit https://github.com/libharu/libharu for the original software. 

@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.16)
+project(sqlite3 C)
+set(SRC sqlite3.c)
+add_library(${PROJECT_NAME} SHARED ${SRC})
+target_include_directories(${PROJECT_NAME} PUBLIC .)
