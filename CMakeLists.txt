@@ -14,6 +14,7 @@ project(HFormatter)
 # 3rd party
 include_directories("3rd-header/")	# header-only library
 SUBDIRLIST(THIRD_LIBS "${CMAKE_CURRENT_LIST_DIR}/3rd-lib")
+set_property(GLOBAL PROPERTY G_THIRD_LIBS "${THIRD_LIBS}")
 foreach(THIRD_LIB ${THIRD_LIBS})
 	add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/3rd-lib/${THIRD_LIB}")
 endforeach()
@@ -25,7 +26,14 @@ include_directories("header/")
 # collect all sources
 aux_source_directory("source/" ALL_SRCS)
 
+add_library(libHFormatter SHARED ${ALL_SRCS})
+target_include_directories(libHFormatter PRIVATE ${THIRD_LIBS})
+target_link_libraries(libHFormatter ${THIRD_LIBS})
+
 # todo: add_executable/add_library
 
-target_include_directories(${PROJECT_NAME} PRIVATE ${THIRD_LIBS})
-target_link_libraries(${PROJECT_NAME} ${THIRD_LIBS})
+# target_include_directories(${PROJECT_NAME} PRIVATE ${THIRD_LIBS})
+# target_link_libraries(${PROJECT_NAME} ${THIRD_LIBS})
+
+# build tests
+add_subdirectory("tests/")
