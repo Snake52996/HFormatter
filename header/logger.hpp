@@ -7,6 +7,6 @@ namespace HFormatter::NLogger{
             std::shared_ptr<spdlog::logger> logger_;
             Logger();
         public:
-            std::shared_ptr<spdlog::logger>& operator()();
+            std::shared_ptr<spdlog::logger>& operator->();
     };
 }
