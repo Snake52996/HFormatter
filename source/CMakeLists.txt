@@ -21,8 +21,8 @@ add_library(PartInfo SHARED part_info.cpp)
 #target_include_directories(PartInfo PRIVATE spdlog)
 target_link_libraries(PartInfo spdlog Logger)
 
-add_library(Indexer SHARED indexer.cpp miaoyue_indexer.cpp)
-target_link_libraries(Indexer spdlog PartIdentifier PartInfo)
+add_library(Indexer SHARED indexer.cpp miaoyue_indexer.cpp pica_indexer.cpp)
+target_link_libraries(Indexer spdlog PartIdentifier PartInfo sqlite3)
 
 add_library(PartIterator SHARED part_iterator.cpp)
 target_link_libraries(PartIterator spdlog Logger)

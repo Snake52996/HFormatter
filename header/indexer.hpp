@@ -4,8 +4,9 @@ _Pragma("once");
 #include<string>
 namespace HFormatter::NIndexer{
     class Indexer{
+        protected:
+            Indexer();
         public:
-			Indexer();
 			virtual HFormatter::NPartInfo::PartInfo getPartInfo(const HFormatter::NPartIdentifier::PartIdentifier&);
             virtual ~Indexer();
     };
