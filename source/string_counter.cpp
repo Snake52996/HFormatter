@@ -1,9 +1,11 @@
 #include<string_counter.hpp>
+#include<logger.hpp>
 #include<string>
 #include<stdexcept>
 #include<cmath>
 using std::string;
 using HFormatter::NStringCounter::StringCounter;
+using HFormatter::NLogger::logger;
 StringCounter::StringCounter(const unsigned int& max_count){
     if(max_count == 0) throw std::logic_error("Maximum value can't be 0");
     double temp_length = log10(max_count);
@@ -13,6 +15,11 @@ StringCounter::StringCounter(const unsigned int& max_count){
         value_.push_back('0');
         if(i == length) break;
     }
+    logger->debug(
+        "StringCounter: requested max_count: {}, digital length set to {}",
+        max_count,
+        length
+    );
 }
 StringCounter& StringCounter::operator++(){
     for(unsigned int i = value_.size() - 1; ; --i){

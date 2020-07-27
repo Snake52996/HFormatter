@@ -2,12 +2,9 @@
  * @file haru_package_builder.cpp
  * @brief implements methods in class HaruPackageBuilder
  * @author Snake52996
- * 
- * Recent changes:
- *     1.1.0    Convert image format to jpeg before packing. Add depedency: stb
- *     1.0.0	Created
 */
 #include<haru_package_builder.hpp>
+#include<logger.hpp>
 #include<hpdf.h>
 #define STB_IMAGE_IMPLEMENTATION        ///< required by stb library
 #include<stb/stb_image.h>
@@ -16,6 +13,7 @@
 #include<string>
 #include<fstream>
 using HFormatter::NPackageBuilder::HaruPackageBuilder;
+using HFormatter::NLogger::logger;
 using std::string;
 bool HaruPackageBuilder::isJpeg(const fs::path& image_path)const{
     // open given file in binary mode
@@ -38,8 +36,12 @@ fs::path HaruPackageBuilder::convertImageToJpeg(const fs::path& origin_path)cons
     static int x;
     static int y;
     static int n;
-    static unsigned char* image_data = stbi_load(origin_path.c_str(), &x, &y, &n, 0);
+    static unsigned char* image_data = NULL;
+    image_data = stbi_load(origin_path.c_str(), &x, &y, &n, 0);
     stbi_write_jpg(result.c_str(), x, y, n, image_data, 100);   // full quality
+    stbi_image_free(image_data);    // free allocated memory
+    image_data = NULL;
+    logger->debug("converted to jpeg: {}->{}", origin_path, result);
     return result;
 }
 void HaruPackageBuilder::createPackage(const fs::path& package){
@@ -64,6 +66,7 @@ void HaruPackageBuilder::addItem(const string& item_path){
     HPDF_Page_SetWidth(page_, width_);
     HPDF_Page_SetHeight(page_, height_);
     HPDF_Page_DrawImage(page_, image_, 0, 0, width_, height_);
+    logger->info("{} added to package {}", jpeg_path, filename_);
 }
 void HaruPackageBuilder::closePackage(){
     HPDF_SaveToFile(pdf_, filename_.c_str());
