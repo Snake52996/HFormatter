@@ -7,7 +7,7 @@ target_link_libraries(Logger spdlog)
 
 add_library(StringCounter SHARED string_counter.cpp)
 
-add_library(FileOperator SHARED file_operator.cpp)
+add_library(FileOperator SHARED file_operator.cpp miaoyue_file_operator.cpp)
 target_link_libraries(FileOperator StringCounter)
 
 add_library(PartIdentifier SHARED part_identifier.cpp)
@@ -17,7 +17,7 @@ target_link_libraries(IdentifierGenerator PartIdentifier)
 
 add_library(PartInfo SHARED part_info.cpp)
 
-add_library(Indexer SHARED indexer.cpp)
+add_library(Indexer SHARED indexer.cpp miaoyue_indexer.cpp)
 target_link_libraries(Indexer PartIdentifier PartInfo)
 
 add_library(PartIterator SHARED part_iterator.cpp)

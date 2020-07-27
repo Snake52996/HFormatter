@@ -4,4 +4,4 @@ using HFormatter::NPartInfo::PartInfo;
 using HFormatter::NPartIdentifier::PartIdentifier;
 Indexer::Indexer(){;}
 PartInfo Indexer::getPartInfo(const PartIdentifier& non){return PartInfo("sense");}
-void Indexer::close(){;}
+Indexer::~Indexer(){;}

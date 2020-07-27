@@ -53,7 +53,8 @@ void HaruPackageBuilder::createPackage(const fs::path& package){
 }
 void HaruPackageBuilder::addItem(const string& item_path){
     // convert image to jpeg
-    static fs::path jpeg_path = convertImageToJpeg(item_path);
+    static fs::path jpeg_path;
+	jpeg_path = convertImageToJpeg(item_path);
     // add new page to pdf file
     page_ = HPDF_AddPage(pdf_);
     // load image from given path

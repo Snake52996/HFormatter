@@ -1,10 +1,14 @@
 #include<string_counter.hpp>
 #include<string>
 #include<stdexcept>
+#include<cmath>
 using std::string;
 using HFormatter::NStringCounter::StringCounter;
-StringCounter::StringCounter(const unsigned int& length){
-    if(length == 0) throw std::logic_error("Length of counter can't be 0");
+StringCounter::StringCounter(const unsigned int& max_count){
+    if(max_count == 0) throw std::logic_error("Maximum value can't be 0");
+    double temp_length = log10(max_count);
+    unsigned int length = temp_length;
+    if(fabs(temp_length - length) >= 1e-8) ++length;
     for(unsigned int i = 1; ; ++i){
         value_.push_back('0');
         if(i == length) break;

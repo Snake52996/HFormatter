@@ -7,6 +7,6 @@ namespace HFormatter::NIndexer{
         public:
 			Indexer();
 			virtual HFormatter::NPartInfo::PartInfo getPartInfo(const HFormatter::NPartIdentifier::PartIdentifier&);
-            virtual void close();
+            virtual ~Indexer();
     };
 }

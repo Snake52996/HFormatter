@@ -23,19 +23,23 @@ else()
 	message(FATAL_ERROR "Unknown build type")
 endif()
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/Out")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out")
 
 # 3rd party
 include_directories("3rd-header/")	# header-only library
 SUBDIRLIST(THIRD_LIBS "${CMAKE_CURRENT_LIST_DIR}/3rd-lib")
-set_property(GLOBAL PROPERTY G_THIRD_LIBS "${THIRD_LIBS}")
 foreach(THIRD_LIB ${THIRD_LIBS})
 	add_subdirectory("${CMAKE_CURRENT_LIST_DIR}/3rd-lib/${THIRD_LIB}")
 endforeach()
 
 # collect all headers
 file(GLOB ALL_INCLUDES "header/*.hpp")
+file(WRITE "${CMAKE_BINARY_DIR}/include/all.hpp" "_Pragma(\"once\");\n")
+foreach(HEADER_NAME ${ALL_INCLUDES})
+	file(APPEND "${CMAKE_BINARY_DIR}/include/all.hpp" "#include \"${HEADER_NAME}\"\n")
+endforeach()
 include_directories("header/")
+include_directories("${CMAKE_BINARY_DIR}/include/")
 
 # collect all sources
 #aux_source_directory("source/" ALL_SRCS)
