@@ -78,6 +78,7 @@ PartInfo PicaIndexer::getPartInfo(const PartIdentifier& id){
     result.setTitle(std::regex_replace(result.getTitle(), unsafe_char_, safe_char_));
     logger->info("find title {}", result.getTitle());
     sqlite3_finalize(sql_handle_);
+    sql_handle_ = nullptr;
     // get items
     prepareItemQuery(id.getIdentifier());
     while(sqlite3_step(sql_handle_) == SQLITE_ROW){
@@ -85,6 +86,7 @@ PartInfo PicaIndexer::getPartInfo(const PartIdentifier& id){
         logger->info("added item {}", (char*)(sqlite3_column_text(sql_handle_, 0)));
     }
     sqlite3_finalize(sql_handle_);
+    sql_handle_ = nullptr;
     logger->info("finished indexing {}", id.getIdentifier());
     return result;
 }

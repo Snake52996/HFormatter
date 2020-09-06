@@ -54,6 +54,10 @@ void HaruPackageBuilder::createPackage(const fs::path& package){
     HPDF_SetPageMode(pdf_, HPDF_PAGE_MODE_USE_NONE);
 }
 void HaruPackageBuilder::addItem(const string& item_path){
+    if(!fs::exists(item_path)){
+        logger->error("item {} not found", item_path);
+        return;
+    }
     // convert image to jpeg
     static fs::path jpeg_path;
 	jpeg_path = convertImageToJpeg(item_path);

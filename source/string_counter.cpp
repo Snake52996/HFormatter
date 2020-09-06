@@ -6,6 +6,9 @@
 using std::string;
 using HFormatter::NStringCounter::StringCounter;
 using HFormatter::NLogger::logger;
+void StringCounter::checkOverflow()const{
+    if(this->is_overflow_) throw std::out_of_range("Counter overflow");
+}
 StringCounter::StringCounter(const unsigned int& max_count){
     if(max_count == 0) throw std::logic_error("Maximum value can't be 0");
     double temp_length = log10(max_count);
@@ -20,11 +23,13 @@ StringCounter::StringCounter(const unsigned int& max_count){
         max_count,
         length
     );
+    is_overflow_ = false;
 }
 StringCounter& StringCounter::operator++(){
+    this->checkOverflow();
     for(unsigned int i = value_.size() - 1; ; --i){
         if(value_[i] == '9'){
-            if(i == 0) throw std::out_of_range("Counter overflow");
+            if(i == 0){is_overflow_ = true; break;}
             else value_[i] = '0';
         }else{
             ++value_[i];
@@ -34,10 +39,11 @@ StringCounter& StringCounter::operator++(){
     return *this;
 }
 StringCounter StringCounter::operator++(int){
+    this->checkOverflow();
     StringCounter tmp(*this);
     for(unsigned int i = value_.size() - 1; ; --i){
         if(value_[i] == '9'){
-            if(i == 0) throw std::out_of_range("Counter overflow");
+            if(i == 0){is_overflow_ = true; break;}
             else value_[i] = '0';
         }else{
             ++value_[i];
@@ -46,4 +52,7 @@ StringCounter StringCounter::operator++(int){
     }
     return tmp;
 }
-string StringCounter::operator()()const{return value_;}
+string StringCounter::operator()()const{
+    this->checkOverflow();
+    return value_;
+}
